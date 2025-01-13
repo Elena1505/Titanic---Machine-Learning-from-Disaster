@@ -44,4 +44,4 @@ Thumbs.db
 data/raw/
 data/processed/
 models/
-*.csv
+reports/
