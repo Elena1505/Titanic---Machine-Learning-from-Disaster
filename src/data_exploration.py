@@ -4,13 +4,14 @@ import matplotlib.pyplot as plt
 import os 
 import seaborn as sns 
 from typing import List
+from pandas import DataFrame
 
 
 def describe(raw_path:str):
     data = pd.read_csv(raw_path)
     info = data.info()
     description = data.describe()
-    return info, description
+    return data, info, description
 
 
 def describe_numerical_data(raw_path:str, column_list:List, figure_path:str):
@@ -40,6 +41,5 @@ def describe_categorical_data(raw_path:str, column_list:List[str], figure_path:s
         plt.close()
 
 
-def compare_data(raw_path: str, index:str, column:str, values:str, aggfunc:str):
-    data = pd.read_csv(raw_path)
+def compare_data(data:DataFrame, index:str, column:str, values:str, aggfunc:str):
     return(pd.pivot_table(data, index = index, columns = column, values = values, aggfunc = aggfunc))
