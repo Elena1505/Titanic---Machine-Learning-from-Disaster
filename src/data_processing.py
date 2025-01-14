@@ -43,6 +43,7 @@ def split_data(dummies_data: DataFrame, data:DataFrame):
     X_train = dummies_data[dummies_data.train_test == 1].drop(['train_test'], axis =1)
     X_test = dummies_data[dummies_data.train_test == 0].drop(['train_test'], axis =1)
     y_train = data[data.train_test==1].Survived
-    return X_train, X_test, y_train
+    y_test = data[data.train_test == 0].Survived
+    return X_train, X_test, y_train, y_test
 
 
