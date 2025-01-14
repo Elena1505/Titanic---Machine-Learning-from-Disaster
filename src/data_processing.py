@@ -27,6 +27,7 @@ def normalize_values(data:DataFrame):
 
 def encode_values(data:DataFrame):
     data.Pclass = data.Pclass.astype(str)
+    # We take only the columns that interest us 
     dummies_data = pd.get_dummies(data[['Pclass','Sex','Age','SibSp','Parch','Norm_fare','Embarked','Cabin_adv','Cabin_multiple','Numeric_ticket','Name_title','train_test']])
     return dummies_data
 
