@@ -1,7 +1,7 @@
 import pandas as pd 
 import numpy as np 
 from pandas import DataFrame
-
+from sklearn.preprocessing import StandardScaler
 
 # Application of the same processes as in feature engineering, but for all data (train and test)
 def process_data_feature(data:DataFrame): 
@@ -23,3 +23,25 @@ def process_null_values(data: DataFrame, train: DataFrame):
 def normalize_values(data:DataFrame):
     data['Norm_fare'] = np.log(data.Fare+1)
     return data 
+
+
+def encode_values(data:DataFrame):
+    data.Pclass = data.Pclass.astype(str)
+    dummies_data = pd.get_dummies(data[['Pclass','Sex','Age','SibSp','Parch','Norm_fare','Embarked','Cabin_adv','Cabin_multiple','Numeric_ticket','Name_title','train_test']])
+    return dummies_data
+
+
+def scale_data(data:DataFrame): 
+    scale = StandardScaler()
+    dummies_data_scaled = data.copy()
+    dummies_data_scaled[['Age','SibSp','Parch','Norm_fare']]= scale.fit_transform(dummies_data_scaled[['Age','SibSp','Parch','Norm_fare']])
+    return dummies_data_scaled
+
+
+def split_data(dummies_data: DataFrame, data:DataFrame):
+    X_train = dummies_data[dummies_data.train_test == 1].drop(['train_test'], axis =1)
+    X_test = dummies_data[dummies_data.train_test == 0].drop(['train_test'], axis =1)
+    y_train = data[data.train_test==1].Survived
+    return X_train, X_test, y_train
+
+
