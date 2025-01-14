@@ -12,3 +12,8 @@ def process_data_feature(data:DataFrame):
     return data 
 
 
+def process_null_values(data: DataFrame, train: DataFrame): 
+    data.Age = data.Age.fillna(train.Age.median())
+    data.Fare = data.Fare.fillna(train.Fare.median())
+    data.dropna(subset=['Embarked'],inplace = True)
+    return data 
