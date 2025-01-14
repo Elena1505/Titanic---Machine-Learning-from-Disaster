@@ -1,6 +1,6 @@
 from src.data_exploration import describe, describe_numerical_data, describe_categorical_data, compare_data
 from src.feature_engineering import combine_data, process_cabin_feature, process_ticket_feature, process_name_feature
-from src.data_processing import process_data_feature, process_null_values
+from src.data_processing import process_data_feature, process_null_values, normalize_values
 
 def main(): 
     train_path = "/home/lelou1505/DS/titanic/data/raw/train.csv"
@@ -24,6 +24,7 @@ def main():
     # Data processing 
     data = process_data_feature(all_data)
     data = process_null_values(data, train)
+    data = normalize_values(data)
     print(data)
 
 if __name__ == "__main__":
