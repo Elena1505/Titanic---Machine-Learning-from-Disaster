@@ -2,6 +2,7 @@ from src.data_exploration import describe, describe_numerical_data, describe_cat
 from src.feature_engineering import combine_data, process_cabin_feature, process_ticket_feature, process_name_feature
 from src.data_processing import process_data_feature, process_null_values, normalize_values, encode_values, scale_data, split_data
 from src.model_building import evaluate_model
+from src.model_tuning import perform_clf
 
 from sklearn.naive_bayes import GaussianNB
 from sklearn.linear_model import LogisticRegression
@@ -56,6 +57,16 @@ def main():
 
     svc_cv = evaluate_model(SVC(probability=True), X_train_scaled, y_train)
     print("SVC score", svc_cv)
+
+
+    # Model tuning 
+    svc = SVC(probability = True)
+    param = [{'kernel': ['rbf'], 'gamma': [.1,.5,1,2,5,10],
+                                  'C': [.1, 1, 10, 100, 1000]},
+                                 {'kernel': ['linear'], 'C': [.1, 1, 10, 100, 1000]},
+                                 {'kernel': ['poly'], 'degree' : [2,3,4,5], 'C': [.1, 1, 10, 100, 1000]}]
+
+    perform_clf(svc, "SVC", param, X_train_scaled, y_train)
 
 
 
